@@ -73,6 +73,213 @@
                 max-width: 800px;
             }
 
+            .big-rocket {
+                width: 8px;
+                height: 30px;
+                background: linear-gradient(#ffaa44, #ff6644);
+            }
+
+            .big-rocket::before {
+                width: 8px;
+                height: 12px;
+            }
+
+            .trail-particle {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: #ffaa44;
+                border-radius: 50%;
+                filter: blur(2px);
+                opacity: 0.8;
+                animation: fadeTrail 1s ease-out forwards;
+            }
+
+            .big-rocket {
+                width: 12px;
+                height: 40px;
+                background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+                border-radius: 6px;
+                position: absolute;
+                transform-origin: center bottom;
+                z-index: 100;
+                box-shadow:
+                    0 0 20px #ff6b6b,
+                    0 0 40px rgba(255, 107, 107, 0.5);
+            }
+
+            .big-rocket::before {
+                content: "";
+                position: absolute;
+                top: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 12px;
+                height: 16px;
+                background: #ff4444;
+                clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+                box-shadow: 0 0 20px #ff4444;
+            }
+
+            .big-rocket::after {
+                content: "";
+                position: absolute;
+                bottom: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 8px;
+                height: 30px;
+                background: linear-gradient(to bottom, #ffd700, transparent);
+                border-radius: 50%;
+                filter: blur(3px);
+                animation: flicker 0.1s infinite;
+            }
+
+            .trail-particle {
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(255, 215, 0, 0.9),
+                    rgba(255, 140, 0, 0.4) 60%,
+                    transparent 100%
+                );
+                border-radius: 50%;
+                filter: blur(3px);
+                opacity: 0.8;
+                animation: fadeTrail 1.2s ease-out forwards;
+            }
+
+            .trail-particle::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: inherit;
+                border-radius: inherit;
+                filter: blur(5px);
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+
+            @keyframes fadeTrail {
+                0% {
+                    opacity: 0.8;
+                    transform: scale(1.2);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.3);
+                }
+            }
+
+            /* Different color variations for big rockets */
+            .big-rocket.gold {
+                background: linear-gradient(45deg, #ffd700, #ffa500);
+                box-shadow:
+                    0 0 20px #ffd700,
+                    0 0 40px rgba(255, 215, 0, 0.5);
+            }
+
+            .big-rocket.blue {
+                background: linear-gradient(45deg, #00bfff, #4169e1);
+                box-shadow:
+                    0 0 20px #00bfff,
+                    0 0 40px rgba(0, 191, 255, 0.5);
+            }
+
+            .big-rocket.green {
+                background: linear-gradient(45deg, #32cd32, #008000);
+                box-shadow:
+                    0 0 20px #32cd32,
+                    0 0 40px rgba(50, 205, 50, 0.5);
+            }
+
+            .big-rocket.purple {
+                background: linear-gradient(45deg, #9932cc, #4b0082);
+                box-shadow:
+                    0 0 20px #9932cc,
+                    0 0 40px rgba(153, 50, 204, 0.5);
+            }
+
+            .big-explosion {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                transform-origin: center;
+                z-index: 95;
+            }
+
+            .big-particle {
+                position: absolute;
+                width: 6px;
+                height: 30px;
+                background: var(--color);
+                border-radius: 2px;
+                transform-origin: center bottom;
+                animation: bigExplode 1.5s ease-out forwards;
+                filter: blur(1px);
+                box-shadow: 0 0 20px var(--color);
+            }
+
+            .small-explosion {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                transform-origin: center;
+                z-index: 94;
+            }
+
+            .small-particle {
+                position: absolute;
+                width: 3px;
+                height: 15px;
+                background: var(--color);
+                border-radius: 1px;
+                transform-origin: center bottom;
+                animation: smallExplode 0.8s ease-out forwards;
+                filter: blur(1px);
+                box-shadow: 0 0 10px var(--color);
+            }
+
+            @keyframes fadeTrail {
+                0% {
+                    opacity: 0.8;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+            }
+
+            @keyframes bigExplode {
+                0% {
+                    transform: rotate(var(--rotation)) translateY(0) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: rotate(var(--rotation))
+                        translateY(var(--distance)) scale(0);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes smallExplode {
+                0% {
+                    transform: rotate(var(--rotation)) translateY(0) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: rotate(var(--rotation)) translateY(50px) scale(0);
+                    opacity: 0;
+                }
+            }
+
             @keyframes fadeIn {
                 from {
                     opacity: 0;
@@ -430,13 +637,219 @@
                 requestAnimationFrame(animateRocket);
             }
 
-            // Launch rockets periodically
-            setInterval(launchRocket, 2000);
+            function launchBigFirework() {
+                const rocket = document.createElement("div");
+                rocket.className = "rocket big-rocket";
 
-            // Initial launches
-            for (let i = 0; i < 3; i++) {
-                setTimeout(launchRocket, i * 500);
+                const cardHeight =
+                    document.querySelector(".diwali-card").offsetHeight;
+                const startX = 100 + Math.random() * (window.innerWidth - 200);
+                const endX = startX + (Math.random() * 60 - 30);
+                const maxHeight = cardHeight * 0.8;
+
+                rocket.style.left = `${startX}px`;
+                rocket.style.bottom = "0";
+
+                document.querySelector(".diwali-card").appendChild(rocket);
+
+                // Create trail effect
+                function createTrailParticle() {
+                    const trail = document.createElement("div");
+                    trail.className = "trail-particle";
+                    trail.style.left = rocket.style.left;
+                    trail.style.bottom = rocket.style.bottom;
+                    document.querySelector(".diwali-card").appendChild(trail);
+                    setTimeout(() => trail.remove(), 1000);
+                }
+
+                const startTime = performance.now();
+                const duration = 2000;
+
+                function animateBigRocket(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = -progress * (progress - 2);
+
+                    const currentX = startX + (endX - startX) * progress;
+                    const currentY = maxHeight * easeProgress;
+
+                    rocket.style.left = `${currentX}px`;
+                    rocket.style.bottom = `${currentY}px`;
+
+                    // Create trail
+                    if (progress < 1 && elapsed % 20 < 1) {
+                        createTrailParticle();
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateBigRocket);
+                    } else {
+                        createBigExplosion(currentX, currentY);
+                        rocket.remove();
+                    }
+                }
+
+                requestAnimationFrame(animateBigRocket);
             }
+
+            function createBigExplosion(x, y) {
+                const explosion = document.createElement("div");
+                explosion.className = "big-explosion";
+                explosion.style.left = `${x}px`;
+                explosion.style.bottom = `${y}px`;
+
+                // Color themes
+                const colorThemes = {
+                    red: [
+                        "#ff0000",
+                        "#ff4444",
+                        "#ff6666",
+                        "#ff9999",
+                        "#ffcccc"
+                    ],
+                    blue: [
+                        "#0000ff",
+                        "#4444ff",
+                        "#6666ff",
+                        "#9999ff",
+                        "#ccccff"
+                    ],
+                    green: [
+                        "#00ff00",
+                        "#44ff44",
+                        "#66ff66",
+                        "#99ff99",
+                        "#ccffcc"
+                    ],
+                    purple: [
+                        "#800080",
+                        "#9932cc",
+                        "#ba55d3",
+                        "#da70d6",
+                        "#dda0dd"
+                    ],
+                    gold: [
+                        "#ffd700",
+                        "#ffdb4d",
+                        "#ffe066",
+                        "#ffe680",
+                        "#ffeb99"
+                    ]
+                };
+
+                // Randomly select one color theme for this explosion
+                const themes = Object.keys(colorThemes);
+                const selectedTheme =
+                    themes[Math.floor(Math.random() * themes.length)];
+                const colors = colorThemes[selectedTheme];
+
+                // Create multiple layers of particles
+                const layers = 3;
+                const particlesPerLayer = 36;
+
+                for (let layer = 0; layer < layers; layer++) {
+                    for (let i = 0; i < particlesPerLayer; i++) {
+                        const particle = document.createElement("span");
+                        particle.className = "big-particle";
+                        particle.style.setProperty(
+                            "--rotation",
+                            `${i * (360 / particlesPerLayer)}deg`
+                        );
+                        particle.style.setProperty(
+                            "--delay",
+                            `${layer * 0.1}s`
+                        );
+                        particle.style.setProperty(
+                            "--distance",
+                            `${200 + layer * 100}px`
+                        );
+                        // Use colors from the selected theme
+                        particle.style.setProperty(
+                            "--color",
+                            colors[Math.floor(Math.random() * colors.length)]
+                        );
+                        explosion.appendChild(particle);
+                    }
+                }
+
+                // Add secondary explosions with the same color theme
+                setTimeout(() => {
+                    for (let i = 0; i < 5; i++) {
+                        const angle = i * 72 * (Math.PI / 180);
+                        const distance = 100;
+                        const secondaryX = x + Math.cos(angle) * distance;
+                        const secondaryY = y + Math.sin(angle) * distance;
+                        createSmallExplosion(
+                            secondaryX,
+                            secondaryY,
+                            selectedTheme
+                        ); // Pass the theme
+                    }
+                }, 300);
+
+                document.querySelector(".diwali-card").appendChild(explosion);
+                setTimeout(() => explosion.remove(), 2000);
+            }
+
+            // Modified small explosion function to accept color theme
+            function createSmallExplosion(x, y, theme) {
+                const explosion = document.createElement("div");
+                explosion.className = "small-explosion";
+                explosion.style.left = `${x}px`;
+                explosion.style.bottom = `${y}px`;
+
+                const colorThemes = {
+                    red: ["#ff0000", "#ff4444", "#ff6666", "#ff9999"],
+                    blue: ["#0000ff", "#4444ff", "#6666ff", "#9999ff"],
+                    green: ["#00ff00", "#44ff44", "#66ff66", "#99ff99"],
+                    purple: ["#800080", "#9932cc", "#ba55d3", "#da70d6"],
+                    gold: ["#ffd700", "#ffdb4d", "#ffe066", "#ffe680"]
+                };
+
+                const colors = colorThemes[theme];
+                const particles = 12;
+
+                for (let i = 0; i < particles; i++) {
+                    const particle = document.createElement("span");
+                    particle.className = "small-particle";
+                    particle.style.setProperty(
+                        "--rotation",
+                        `${i * (360 / particles)}deg`
+                    );
+                    particle.style.setProperty(
+                        "--color",
+                        colors[Math.floor(Math.random() * colors.length)]
+                    );
+                    explosion.appendChild(particle);
+                }
+
+                document.querySelector(".diwali-card").appendChild(explosion);
+                setTimeout(() => explosion.remove(), 1000);
+            }
+
+            function scheduleNextLaunch() {
+                if (Math.random() < 0.4) {
+                    launchBigFirework();
+                } else {
+                    launchRocket();
+                }
+
+                setTimeout(
+                    () => {
+                        scheduleNextLaunch();
+                    },
+                    Math.random() * 2000 + 800
+                );
+            }
+
+            // Start the first sequence
+            
+                        // Initial launches
+            for (let i = 0; i < 4; i++) {
+                setTimeout(Math.random()<0.3?launchBigFirework:launchRocket, i * 500);
+            }
+            setTimeout(
+            scheduleNextLaunch,4000)
         </script>
     </body>
 </html>
