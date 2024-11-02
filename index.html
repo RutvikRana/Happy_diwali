@@ -8,23 +8,25 @@
                 padding: 0;
                 box-sizing: border-box;
             }
+
             body,
             html {
                 width: 100%;
-                height: 100vh;
+                min-height: 100vh;
+                height: 100%;
                 overflow: hidden;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 background: #000;
                 margin: 0;
-                padding: 10px; /* Added padding */
-                padding-top: 30px;
+                padding: 10px;
             }
 
             .diwali-card {
-                width: 90%;
-                height: 85vh; /* Reduced from 90vh */
+                width: 100%;
+                height: 100%;
+                min-height: 100svh;
                 max-width: 1200px;
                 background: radial-gradient(circle at center, #2c0435, #1a0124);
                 border-radius: 30px;
@@ -35,16 +37,17 @@
                 position: relative;
                 overflow: hidden;
                 box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-                margin: 20px auto; /* Added margin */
+                padding: 20px 0;
             }
 
             .diya-container {
-                position: absolute;
-                bottom: 30px; /* Adjusted from 50px */
+                position: relative;
                 width: 100%;
                 display: flex;
                 justify-content: center;
-                gap: 40px;
+                gap: clamp(20px, 4vw, 40px);
+                margin-top: auto;
+                padding-bottom: 20%;
                 z-index: 5;
             }
 
@@ -58,6 +61,23 @@
                 border-radius: 30px;
                 backdrop-filter: blur(5px);
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 80%;
+                max-width: 800px;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, calc(-50% - 20px));
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, -50%);
+                }
             }
 
             .message h1 {
@@ -218,14 +238,35 @@
                 }
             }
 
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
+            @media (max-width: 768px) {
+                body,
+                html {
+                    padding: 5px;
                 }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
+
+                .diwali-card {
+                    border-radius: 20px;
+                }
+
+                .diya {
+                    width: 40px;
+                    height: 28px;
+                }
+
+                .flame {
+                    top: -20px;
+                    width: 16px;
+                    height: 24px;
+                }
+            }
+
+            @media (max-height: 600px) {
+                .message {
+                    padding: 15px;
+                }
+
+                .diya-container {
+                    padding-bottom: 10px;
                 }
             }
         </style>
