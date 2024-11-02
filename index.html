@@ -864,7 +864,7 @@
 
             function scheduleNextLaunch() {
                 if (Math.random() < 0.4) {
-                    launchBigFirework();
+                    launchRocket();
                 } else {
                     launchRocket();
                 }
@@ -882,7 +882,7 @@
             // Initial launches
             for (let i = 0; i < 4; i++) {
                 setTimeout(
-                    Math.random() < 0.3 ? launchBigFirework : launchRocket,
+                    Math.random() < 0.3 ? launchRocket : launchRocket,
                     i * 500
                 );
             }
