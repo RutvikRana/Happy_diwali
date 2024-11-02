@@ -96,8 +96,8 @@
             }
 
             .big-rocket {
-                width: 12px;
-                height: 40px;
+                width: 10px;
+                height: 24px;
                 background: linear-gradient(45deg, #ff6b6b, #ff8e53);
                 border-radius: 6px;
                 position: absolute;
@@ -114,8 +114,8 @@
                 top: -8px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 12px;
-                height: 16px;
+                width: 11px;
+                height: 14px;
                 background: #ff4444;
                 clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
                 box-shadow: 0 0 20px #ff4444;
@@ -176,28 +176,28 @@
 
             /* Different color variations for big rockets */
             .big-rocket.gold {
-                background: linear-gradient(45deg, #ffd700, #ffa500);
+                
                 box-shadow:
                     0 0 20px #ffd700,
                     0 0 40px rgba(255, 215, 0, 0.5);
             }
 
             .big-rocket.blue {
-                background: linear-gradient(45deg, #00bfff, #4169e1);
+                
                 box-shadow:
                     0 0 20px #00bfff,
                     0 0 40px rgba(0, 191, 255, 0.5);
             }
 
             .big-rocket.green {
-                background: linear-gradient(45deg, #32cd32, #008000);
+                
                 box-shadow:
                     0 0 20px #32cd32,
                     0 0 40px rgba(50, 205, 50, 0.5);
             }
 
             .big-rocket.purple {
-                background: linear-gradient(45deg, #9932cc, #4b0082);
+                
                 box-shadow:
                     0 0 20px #9932cc,
                     0 0 40px rgba(153, 50, 204, 0.5);
@@ -636,8 +636,49 @@
 
                 requestAnimationFrame(animateRocket);
             }
-
+            
             function launchBigFirework() {
+                const rocket = document.createElement("div");
+                const theme = ["gold","blue","green","purple","red"][Math.floor(Math.random() * 4)];
+                rocket.className = "big-rocket " + theme;
+                const cardHeight = document.querySelector(".diwali-card").offsetHeight;
+                const startX = 100 + Math.random() * (window.innerWidth - 200);
+                const endX = startX + (Math.random() * 200 - 100);
+                const maxHeight = cardHeight * 0.8;
+
+                rocket.style.left = `${startX}px`;
+                rocket.style.bottom = "0";
+                document.querySelector(".diwali-card").appendChild(rocket);
+
+                const startTime = performance.now();
+                const duration = 2000;
+
+                function animateRocket(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = -progress * (progress - 2);
+                    const currentX = startX + (endX - startX) * progress;
+                    const currentY = easeProgress * maxHeight;
+
+                    if (progress < 1) {
+                        rocket.style.transform = `translate(${currentX - startX}px, ${-currentY}px)`;
+                        requestAnimationFrame(animateRocket);
+
+                        const trail = document.createElement("div");
+                        trail.className = "trail-particle";
+                        trail.style.left = `${currentX}px`;
+                        trail.style.bottom = `${currentY}px`;
+                        document.querySelector(".diwali-card").appendChild(trail);
+                        setTimeout(() => trail.remove(), 1000);
+                    } else {
+                        rocket.remove();
+                        createBigExplosion(currentX, currentY,theme);
+                    }
+                }
+
+                requestAnimationFrame(animateRocket);
+            }
+            function launchBigFirework2() {
                 const rocket = document.createElement("div");
                 rocket.className = "rocket big-rocket";
 
@@ -692,7 +733,7 @@
                 requestAnimationFrame(animateBigRocket);
             }
 
-            function createBigExplosion(x, y) {
+            function createBigExplosion(x, y, theme) {
                 const explosion = document.createElement("div");
                 explosion.className = "big-explosion";
                 explosion.style.left = `${x}px`;
@@ -700,35 +741,35 @@
 
                 // Color themes
                 const colorThemes = {
-                    red: [
+                    "red": [
                         "#ff0000",
                         "#ff4444",
                         "#ff6666",
                         "#ff9999",
                         "#ffcccc"
                     ],
-                    blue: [
+                    "blue": [
                         "#0000ff",
                         "#4444ff",
                         "#6666ff",
                         "#9999ff",
                         "#ccccff"
                     ],
-                    green: [
+                    "green": [
                         "#00ff00",
                         "#44ff44",
                         "#66ff66",
                         "#99ff99",
                         "#ccffcc"
                     ],
-                    purple: [
+                    "purple": [
                         "#800080",
                         "#9932cc",
                         "#ba55d3",
                         "#da70d6",
                         "#dda0dd"
                     ],
-                    gold: [
+                    "gold": [
                         "#ffd700",
                         "#ffdb4d",
                         "#ffe066",
@@ -739,7 +780,7 @@
 
                 // Randomly select one color theme for this explosion
                 const themes = Object.keys(colorThemes);
-                const selectedTheme =
+                const selectedTheme = theme??
                     themes[Math.floor(Math.random() * themes.length)];
                 const colors = colorThemes[selectedTheme];
 
