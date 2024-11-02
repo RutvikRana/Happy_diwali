@@ -8,7 +8,6 @@
                 padding: 0;
                 box-sizing: border-box;
             }
-
             body,
             html {
                 width: 100%;
@@ -18,11 +17,13 @@
                 justify-content: center;
                 align-items: center;
                 background: #000;
+                margin: 0;
+                padding: 20px; /* Added padding */
             }
 
             .diwali-card {
                 width: 90%;
-                height: 90vh;
+                height: 85vh; /* Reduced from 90vh */
                 max-width: 1200px;
                 background: radial-gradient(circle at center, #2c0435, #1a0124);
                 border-radius: 30px;
@@ -33,6 +34,17 @@
                 position: relative;
                 overflow: hidden;
                 box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+                margin: 20px auto; /* Added margin */
+            }
+
+            .diya-container {
+                position: absolute;
+                bottom: 30px; /* Adjusted from 50px */
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 40px;
+                z-index: 5;
             }
 
             .message {
@@ -119,16 +131,6 @@
                 animation: explode 1s ease-out forwards;
                 filter: blur(1px);
                 box-shadow: 0 0 10px var(--color);
-            }
-
-            .diya-container {
-                position: absolute;
-                bottom: 50px;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                gap: 40px;
-                z-index: 5;
             }
 
             .diya {
@@ -282,70 +284,71 @@
             ];
 
             function createExplosion(x, y, color) {
-    const explosion = document.createElement('div');
-    explosion.className = 'explosion';
-    explosion.style.left = `${x}px`;
-    explosion.style.bottom = `${y}px`;
-    
-    for(let i = 0; i < 24; i++) {
-        const particle = document.createElement('span');
-        particle.style.setProperty('--rotation', `${i * 15}deg`);
-        particle.style.setProperty('--color', color);
-        explosion.appendChild(particle);
-    }
+                const explosion = document.createElement("div");
+                explosion.className = "explosion";
+                explosion.style.left = `${x}px`;
+                explosion.style.bottom = `${y}px`;
 
-    document.querySelector('.diwali-card').appendChild(explosion);
-    setTimeout(() => explosion.remove(), 1000);
-}
+                for (let i = 0; i < 24; i++) {
+                    const particle = document.createElement("span");
+                    particle.style.setProperty("--rotation", `${i * 15}deg`);
+                    particle.style.setProperty("--color", color);
+                    explosion.appendChild(particle);
+                }
 
-function launchRocket() {
-    const rocket = document.createElement('div');
-    rocket.className = 'rocket';
-    
-    const cardHeight = document.querySelector('.diwali-card').offsetHeight;
-    const startX = 100 + Math.random() * (window.innerWidth - 200);
-    const endX = startX + (Math.random() * 100 - 50);
-    const maxHeight = cardHeight * 0.7;
-    
-    rocket.style.left = `${startX}px`;
-    rocket.style.bottom = '0';
-    
-    document.querySelector('.diwali-card').appendChild(rocket);
+                document.querySelector(".diwali-card").appendChild(explosion);
+                setTimeout(() => explosion.remove(), 1000);
+            }
 
-    const startTime = performance.now();
-    const duration = 1500;
-    
-    function animateRocket(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = -progress * (progress - 2);
-        
-        const currentX = startX + (endX - startX) * progress;
-        const currentY = maxHeight * easeProgress;
-        
-        rocket.style.left = `${currentX}px`;
-        rocket.style.bottom = `${currentY}px`;
-        
-        if (progress < 1) {
-            requestAnimationFrame(animateRocket);
-        } else {
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            createExplosion(currentX, currentY, color);
-            rocket.remove();
-        }
-    }
-    
-    requestAnimationFrame(animateRocket);
-}
+            function launchRocket() {
+                const rocket = document.createElement("div");
+                rocket.className = "rocket";
 
-// Launch rockets periodically
-setInterval(launchRocket, 2000);
+                const cardHeight =
+                    document.querySelector(".diwali-card").offsetHeight;
+                const startX = 100 + Math.random() * (window.innerWidth - 200);
+                const endX = startX + (Math.random() * 100 - 50);
+                const maxHeight = cardHeight * 0.7;
 
-// Initial launches
-for(let i = 0; i < 3; i++) {
-    setTimeout(launchRocket, i * 500);
-}
+                rocket.style.left = `${startX}px`;
+                rocket.style.bottom = "0";
 
+                document.querySelector(".diwali-card").appendChild(rocket);
+
+                const startTime = performance.now();
+                const duration = 1500;
+
+                function animateRocket(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = -progress * (progress - 2);
+
+                    const currentX = startX + (endX - startX) * progress;
+                    const currentY = maxHeight * easeProgress;
+
+                    rocket.style.left = `${currentX}px`;
+                    rocket.style.bottom = `${currentY}px`;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateRocket);
+                    } else {
+                        const color =
+                            colors[Math.floor(Math.random() * colors.length)];
+                        createExplosion(currentX, currentY, color);
+                        rocket.remove();
+                    }
+                }
+
+                requestAnimationFrame(animateRocket);
+            }
+
+            // Launch rockets periodically
+            setInterval(launchRocket, 2000);
+
+            // Initial launches
+            for (let i = 0; i < 3; i++) {
+                setTimeout(launchRocket, i * 500);
+            }
         </script>
     </body>
 </html>
