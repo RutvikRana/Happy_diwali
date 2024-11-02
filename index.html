@@ -2,6 +2,10 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap"
+            rel="stylesheet"
+        />
         <style>
             * {
                 margin: 0;
@@ -81,21 +85,61 @@
             }
 
             .message h1 {
-                font-size: min(10vw, 100px);
-                font-family: "Arial", sans-serif;
-                background: linear-gradient(45deg, #ffd700, #ff6b6b, #ffd700);
+                font-size: min(8vw, 80px);
+                font-family: "Poppins", sans-serif;
+                background: linear-gradient(45deg, #ffd700, #ff8c00, #ffd700);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 5px;
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+                letter-spacing: 1px;
+                animation: shimmer 2s infinite;
+            }
+
+            .message h4 {
+                font-size: min(5vw, 50px);
+                color: #fff;
+                margin: 0;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+                transform: translateY(-5px);
+                font-family: "Dancing Script", cursive;
+            }
+
+            .message h2 {
+                font-size: min(7vw, 70px);
+                font-family: "Poppins", sans-serif;
+                background: linear-gradient(45deg, #00f2fe, #4facfe, #00f2fe);
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
                 margin-bottom: 30px;
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+                text-shadow: 0 0 20px rgba(79, 172, 254, 0.6);
+                letter-spacing: 1px;
+                animation: shimmer 2s infinite;
+                transform: translateY(-5px);
             }
 
             .message p {
-                font-size: min(3vw, 28px);
+                font-size: min(2.5vw, 24px);
                 line-height: 1.6;
                 color: #fff;
                 text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+                font-family: "Quicksand", sans-serif;
+                letter-spacing: 0.5px;
+                opacity: 0.9;
+            }
+
+            @keyframes shimmer {
+                0% {
+                    filter: brightness(1);
+                }
+                50% {
+                    filter: brightness(1.2);
+                }
+                100% {
+                    filter: brightness(1);
+                }
             }
 
             .rocket {
@@ -276,9 +320,11 @@
             <div class="sparkles" id="sparkles"></div>
             <div class="message">
                 <h1>Happy Diwali</h1>
+                <h4>&</h4>
+                <h2>Happy New Year!</h2>
                 <p>
-                    May the festival of lights bring<br />joy, prosperity, and
-                    happiness<br />to you and your family
+                    Wishing you joy, prosperity and<br />
+                    happiness on this festive season
                 </p>
             </div>
             <div class="diya-container" id="diyas"></div>
