@@ -176,28 +176,24 @@
 
             /* Different color variations for big rockets */
             .big-rocket.gold {
-                
                 box-shadow:
                     0 0 20px #ffd700,
                     0 0 40px rgba(255, 215, 0, 0.5);
             }
 
             .big-rocket.blue {
-                
                 box-shadow:
                     0 0 20px #00bfff,
                     0 0 40px rgba(0, 191, 255, 0.5);
             }
 
             .big-rocket.green {
-                
                 box-shadow:
                     0 0 20px #32cd32,
                     0 0 40px rgba(50, 205, 50, 0.5);
             }
 
             .big-rocket.purple {
-                
                 box-shadow:
                     0 0 20px #9932cc,
                     0 0 40px rgba(153, 50, 204, 0.5);
@@ -636,12 +632,15 @@
 
                 requestAnimationFrame(animateRocket);
             }
-            
+
             function launchBigFirework() {
                 const rocket = document.createElement("div");
-                const theme = ["gold","blue","green","purple","red"][Math.floor(Math.random() * 4)];
+                const theme = ["gold", "blue", "green", "purple", "red"][
+                    Math.floor(Math.random() * 4)
+                ];
                 rocket.className = "big-rocket " + theme;
-                const cardHeight = document.querySelector(".diwali-card").offsetHeight;
+                const cardHeight =
+                    document.querySelector(".diwali-card").offsetHeight;
                 const startX = 100 + Math.random() * (window.innerWidth - 200);
                 const endX = startX + (Math.random() * 200 - 100);
                 const maxHeight = cardHeight * 0.8;
@@ -661,18 +660,13 @@
                     const currentY = easeProgress * maxHeight;
 
                     if (progress < 1) {
-                        rocket.style.transform = `translate(${currentX - startX}px, ${-currentY}px)`;
+                        rocket.style.transform = `translate(${
+                            currentX - startX
+                        }px, ${-currentY}px)`;
                         requestAnimationFrame(animateRocket);
-
-                        const trail = document.createElement("div");
-                        trail.className = "trail-particle";
-                        trail.style.left = `${currentX}px`;
-                        trail.style.bottom = `${currentY}px`;
-                        document.querySelector(".diwali-card").appendChild(trail);
-                        setTimeout(() => trail.remove(), 1000);
                     } else {
                         rocket.remove();
-                        createBigExplosion(currentX, currentY,theme);
+                        createBigExplosion(currentX, currentY, theme);
                     }
                 }
 
@@ -741,35 +735,35 @@
 
                 // Color themes
                 const colorThemes = {
-                    "red": [
+                    red: [
                         "#ff0000",
                         "#ff4444",
                         "#ff6666",
                         "#ff9999",
                         "#ffcccc"
                     ],
-                    "blue": [
+                    blue: [
                         "#0000ff",
                         "#4444ff",
                         "#6666ff",
                         "#9999ff",
                         "#ccccff"
                     ],
-                    "green": [
+                    green: [
                         "#00ff00",
                         "#44ff44",
                         "#66ff66",
                         "#99ff99",
                         "#ccffcc"
                     ],
-                    "purple": [
+                    purple: [
                         "#800080",
                         "#9932cc",
                         "#ba55d3",
                         "#da70d6",
                         "#dda0dd"
                     ],
-                    "gold": [
+                    gold: [
                         "#ffd700",
                         "#ffdb4d",
                         "#ffe066",
@@ -780,8 +774,8 @@
 
                 // Randomly select one color theme for this explosion
                 const themes = Object.keys(colorThemes);
-                const selectedTheme = theme??
-                    themes[Math.floor(Math.random() * themes.length)];
+                const selectedTheme =
+                    theme ?? themes[Math.floor(Math.random() * themes.length)];
                 const colors = colorThemes[selectedTheme];
 
                 // Create multiple layers of particles
@@ -884,13 +878,15 @@
             }
 
             // Start the first sequence
-            
-                        // Initial launches
+
+            // Initial launches
             for (let i = 0; i < 4; i++) {
-                setTimeout(Math.random()<0.3?launchBigFirework:launchRocket, i * 500);
+                setTimeout(
+                    Math.random() < 0.3 ? launchBigFirework : launchRocket,
+                    i * 500
+                );
             }
-            setTimeout(
-            scheduleNextLaunch,4000)
+            setTimeout(scheduleNextLaunch, 4000);
         </script>
     </body>
 </html>
