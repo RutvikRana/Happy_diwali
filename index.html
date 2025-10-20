@@ -529,6 +529,313 @@
 સ્નેહીશ્રી, 
 જય યોગેશ્વર જય માતાજી.
 દિપોત્સવી પર્વ અને આવનાર નૂતન વર્ષના હાર્દિક અભિનંદન- શુભકામનાસહ
+ડૉ હરેન્દ્રસિંહ રણા, ડૉ હેમાગ્નીબેન, ડૉ ખુશ્બુ, ડૉ ઋત્વિક
+                </pre>
+            </div>
+            <div class="diya-container" id="diyas"></div>
+            <div id="fireworks"></div>
+        </div>
+
+        <script>
+            // Create Diyas
+            const diyaContainer = document.getElementById("diyas");
+            const numDiyas = Math.min(Math.floor(window.innerWidth / 120), 7);
+
+            for (let i = 0; i < numDiyas; i++) {
+                const diya = document.createElement("div");
+                diya.className = "diya";
+                const flame = document.createElement("div");
+                flame.className = "flame";
+                diya.appendChild(flame);
+                diyaContainer.appendChild(diya);
+            }
+
+            // Create Sparkles
+            const sparklesContainer = document.getElementById("sparkles");
+            for (let i = 0; i < 150; i++) {
+                const sparkle = document.createElement("div");
+                sparkle.className = "sparkle";
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                sparklesContainer.appendChild(sparkle);
+            }
+
+            const colors = [
+                "#ff5252",
+                "#ffeb3b",
+                "#4caf50",
+                "#448aff",
+                "#e040fb",
+                "#00e5ff",
+                "#f48fb1",
+                "#fff176",
+                "#81c784",
+                "#64b5f6",
+                "#ba68c8",
+                "#4dd0e1"
+            ];
+
+            function createExplosion(x, y, color) {
+                const explosion = document.createElement("div");
+                explosion.className = "explosion";
+                explosion.style.left = `${x}px`;
+                explosion.style.bottom = `${y}px`;
+
+                for (let i = 0; i < 24; i++) {
+                    const particle = document.createElement("span");
+                    particle.style.setProperty("--rotation", `${i * 15}deg`);
+                    particle.style.setProperty("--color", color);
+                    explosion.appendChild(particle);
+                }
+
+                document.querySelector(".diwali-card").appendChild(explosion);
+                setTimeout(() => explosion.remove(), 1000);
+            }
+
+            function launchRocket() {
+                const rocket = document.createElement("div");
+                rocket.className = "rocket";
+
+                const cardHeight =
+                    document.querySelector(".diwali-card").offsetHeight;
+                const startX = 100 + Math.random() * (window.innerWidth - 200);
+                const endX = startX + (Math.random() * 100 - 50);
+                const maxHeight = cardHeight * 0.7;
+
+                rocket.style.left = `${startX}px`;
+                rocket.style.bottom = "0";
+
+                document.querySelector(".diwali-card").appendChild(rocket);
+
+                const startTime = performance.now();
+                const duration = 1500;
+
+                function animateRocket(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = -progress * (progress - 2);
+
+                    const currentX = startX + (endX - startX) * progress;
+                    const currentY = maxHeight * easeProgress;
+
+                    rocket.style.left = `${currentX}px`;
+                    rocket.style.bottom = `${currentY}px`;
+
+                    if (progresnsparent;
+                margin-bottom: 30px;
+                text-shadow: 0 0 20px rgba(79, 172, 254, 0.6);
+                letter-spacing: 1px;
+                animation: shimmer 2s infinite;
+                transform: translateY(-5px);
+            }
+
+            .message pre {
+                font-size: min(2.5vw, 24px);
+                line-height: 1.6;
+                color: #fff;
+                text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+                font-family: "Quicksand", sans-serif;
+                letter-spacing: 0.5px;
+                opacity: 0.9;
+            }
+
+            @keyframes shimmer {
+                0% {
+                    filter: brightness(1);
+                }
+                50% {
+                    filter: brightness(1.2);
+                }
+                100% {
+                    filter: brightness(1);
+                }
+            }
+
+            .rocket {
+                position: absolute;
+                width: 6px;
+                height: 20px;
+                background: linear-gradient(#ff8844, #ff4444);
+                border-radius: 2px;
+                transform-origin: center bottom;
+                z-index: 100;
+            }
+
+            .rocket::before {
+                content: "";
+                position: absolute;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 8px;
+                background: #ff4444;
+                clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            }
+
+            .rocket::after {
+                content: "";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 4px;
+                height: 15px;
+                background: linear-gradient(to bottom, #ffaa44, transparent);
+                border-radius: 50%;
+                filter: blur(2px);
+                animation: flicker 0.2s infinite;
+            }
+
+            .explosion {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                transform-origin: center;
+                z-index: 90;
+            }
+
+            .explosion span {
+                position: absolute;
+                width: 4px;
+                height: 20px;
+                background: var(--color);
+                border-radius: 2px;
+                transform-origin: center bottom;
+                animation: explode 1s ease-out forwards;
+                filter: blur(1px);
+                box-shadow: 0 0 10px var(--color);
+            }
+
+            .diya {
+                width: 50px;
+                height: 35px;
+                background: linear-gradient(45deg, #4f2602, #f7a65e);
+                border-radius: 50%;
+                position: relative;
+                transform: perspective(500px) rotateX(30deg);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .flame {
+                position: absolute;
+                top: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 20px;
+                height: 30px;
+                background: linear-gradient(orange, yellow);
+                border-radius: 50% 50% 20% 20%;
+                animation: flicker 0.5s infinite alternate;
+                filter: blur(1px);
+            }
+
+            .sparkles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            .sparkle {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: #fff;
+                border-radius: 50%;
+                animation: sparkle 2s linear infinite;
+                box-shadow: 0 0 10px #fff;
+            }
+
+            @keyframes explode {
+                0% {
+                    transform: rotate(var(--rotation)) translateY(0) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: rotate(var(--rotation)) translateY(100px)
+                        scale(0);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes flicker {
+                0%,
+                100% {
+                    transform: translateX(-50%) scale(1);
+                    opacity: 0.9;
+                    filter: blur(1px);
+                }
+                50% {
+                    transform: translateX(-50%) scale(1.2);
+                    opacity: 1;
+                    filter: blur(2px);
+                }
+            }
+
+            @keyframes sparkle {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 0;
+                }
+                50% {
+                    transform: scale(1) rotate(180deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @media (max-width: 768px) {
+                body,
+                html {
+                    padding: 5px;
+                }
+
+                .diwali-card {
+                    border-radius: 20px;
+                }
+
+                .diya {
+                    width: 40px;
+                    height: 28px;
+                }
+
+                .flame {
+                    top: -20px;
+                    width: 16px;
+                    height: 24px;
+                }
+            }
+
+            @media (max-height: 600px) {
+                .message {
+                    padding: 15px;
+                }
+
+                .diya-container {
+                    padding-bottom: 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="diwali-card">
+            <div class="sparkles" id="sparkles"></div>
+            <div class="message">
+                <h1>Happy Diwali</h1>
+                <h4>&</h4>
+                <h2>Happy New Year!</h2>
+                <pre>
+સ્નેહીશ્રી, 
+જય યોગેશ્વર જય માતાજી.
+દિપોત્સવી પર્વ અને આવનાર નૂતન વર્ષના હાર્દિક અભિનંદન- શુભકામનાસહ
 ડૉ હરેન્દ્રસિંહ રણા, ડૉ હેમાગ્નીબેન, ડૉ ખુશ્બુ, ડૉ ઋત્વક
                 </pre>
             </div>
