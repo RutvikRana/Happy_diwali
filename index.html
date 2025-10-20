@@ -1,68 +1,207 @@
 <!doctype html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap"
-            rel="stylesheet"
-        />
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet"/>
+  <title>Happy Diwali</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100vh; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; padding: 10px; overflow: hidden; }
+    .diwali-card {
+      width: 100%; max-width: 1200px; min-height: 100svh;
+      background: radial-gradient(circle at center, #2c0435, #1a0124);
+      border-radius: 30px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+      position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255,215,0,0.3); padding:20px 0;
+    }
+    .diya-container {
+      position: relative; width:100%; display:flex; justify-content:center; gap:clamp(20px,4vw,40px);
+      margin-top:auto; padding-bottom:20%; z-index:5;
+    }
 
-            body,
-            html {
-                width: 100%;
-                min-height: 100vh;
-                height: 100%;
-                overflow: hidden;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background: #000;
-                margin: 0;
-                padding: 10px;
-            }
+    /* Message: slower fade-in from below */
+    .message {
+      text-align:center; color:#fff; z-index:10;
+      /* fade in from below more slowly, keep final state */
+      animation: fadeIn 2.4s cubic-bezier(.22,.9,.26,1) both;
+      padding:40px;
+      background: rgba(0,0,0,0.2); border-radius:30px; backdrop-filter: blur(5px);
+      border:1px solid rgba(255,255,255,0.1); position:absolute;
+      top:40%; left:50%; transform:translate(-50%,-50%); width:80%; max-width:800px;
+    }
 
-            .diwali-card {
-                width: 100%;
-                height: 100%;
-                min-height: 100svh;
-                max-width: 1200px;
-                background: radial-gradient(circle at center, #2c0435, #1a0124);
-                border-radius: 30px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: relative;
-                overflow: hidden;
-                box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-                padding: 20px 0;
-            }
+    .message h1 { font-size:min(8vw,80px); font-family:"Poppins",sans-serif; background:linear-gradient(45deg,#ffd700,#ff8c00,#ffd700); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:5px; text-shadow:0 0 20px rgba(255,215,0,0.6); letter-spacing:1px; animation:shimmer 2s infinite; }
+    .message h4 { font-size:min(5vw,50px); color:#fff; margin:0; text-shadow:0 0 12px rgba(255,255,255,0.7); transform:translateY(-5px); font-family:"Dancing Script",cursive; }
+    .message h2 { font-size:min(7vw,70px); font-family:"Poppins",sans-serif; background:linear-gradient(45deg,#00f2fe,#4facfe,#00f2fe); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:30px; text-shadow:0 0 20px rgba(79,172,254,0.6); letter-spacing:1px; animation:shimmer 2s infinite; transform:translateY(-5px); }
 
-            .diya-container {
-                position: relative;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                gap: clamp(20px, 4vw, 40px);
-                margin-top: auto;
-                padding-bottom: 20%;
-                z-index: 5;
-            }
+    /* Center all lines in pre text */
+    .message pre {
+      font-size:min(2.5vw,24px);
+      line-height:1.6;
+      color:#fff;
+      text-shadow:0 0 10px rgba(255,165,0,0.8);
+      font-family:"Quicksand",sans-serif;
+      letter-spacing:0.5px;
+      opacity:0.95;
+      text-align:center;        /* <<-- center each line */
+      white-space: pre-wrap;   /* preserve wrapping/newlines, but allow line breaks on small screens */
+      margin: 0 auto;
+    }
 
-            .message {
-                text-align: center;
-                color: #fff;
-                z-index: 10;
-                animation: fadeIn 2s ease-in;
-                padding: 40px;
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 30px;
+    @keyframes shimmer { 0% { filter:brightness(1); } 50% { filter:brightness(1.2); } 100% { filter:brightness(1); } }
+
+    .diya { width:50px; height:35px; background:linear-gradient(45deg,#4f2602,#f7a65e); border-radius:50%; position:relative; transform:perspective(500px) rotateX(30deg); box-shadow:0 5px 15px rgba(0,0,0,0.3); }
+    .flame { position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:20px; height:30px; background:linear-gradient(orange,yellow); border-radius:50% 50% 20% 20%; animation:flicker 0.5s infinite alternate; filter:blur(1px); }
+    .sparkles { position:absolute; width:100%; height:100%; pointer-events:none; z-index:6; }
+    .sparkle { position:absolute; width:4px; height:4px; background:#fff; border-radius:50%; animation:sparkle 2s linear infinite; box-shadow:0 0 10px #fff; }
+    @keyframes sparkle { 0% { transform:scale(0) rotate(0deg); opacity:0; } 50% { transform:scale(1) rotate(180deg); opacity:1; } 100% { transform:scale(0) rotate(360deg); opacity:0; } }
+
+    /* rocket & explosion */
+    .rocket { position:absolute; width:8px; height:24px; background:linear-gradient(45deg,#ff6b6b,#ff8e53); border-radius:6px; transform-origin:center bottom; z-index:100; box-shadow:0 0 20px #ff6b6b, 0 0 40px rgba(255,107,107,0.5); }
+    .rocket::before { content:""; position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:11px; height:14px; background:#ff4444; clip-path:polygon(50% 0%, 0% 100%, 100% 100%); box-shadow:0 0 20px #ff4444; }
+    .rocket::after { content:""; position:absolute; bottom:-30px; left:50%; transform:translateX(-50%); width:8px; height:30px; background:linear-gradient(to bottom,#ffd700,transparent); border-radius:50%; filter:blur(3px); animation:flicker 0.1s infinite; }
+    .explosion { position:absolute; width:10px; height:10px; transform-origin:center; z-index:90; pointer-events:none; }
+    .explosion span { position:absolute; width:4px; height:20px; background:var(--color); border-radius:2px; transform-origin:center bottom; animation:explode 1s ease-out forwards; filter:blur(1px); box-shadow:0 0 10px var(--color); }
+    @keyframes explode { 0% { transform:rotate(var(--rotation)) translateY(0) scale(1); opacity:1; } 100% { transform:rotate(var(--rotation)) translateY(100px) scale(0); opacity:0; } }
+    @keyframes flicker { 0%,100% { transform:translateX(-50%) scale(1); opacity:0.9; filter:blur(1px); } 50% { transform:translateX(-50%) scale(1.2); opacity:1; filter:blur(2px); } }
+
+    /* Fade-in from below: start slightly lower (+20px) and move up to center */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 24px));
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @media (max-width:768px) {
+      html,body { padding:5px; }
+      .diwali-card { border-radius:20px; }
+      .diya { width:40px; height:28px; }
+      .flame { top:-20px; width:16px; height:24px; }
+      .message { padding:20px; top:45%; }
+    }
+    @media (max-height:600px) {
+      .message { padding:15px; }
+      .diya-container { padding-bottom:10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="diwali-card">
+    <div class="sparkles" id="sparkles"></div>
+
+    <div class="message">
+      <h1>Happy Diwali</h1>
+      <h4>&</h4>
+      <h2>Happy New Year!</h2>
+      <pre>
+સ્નેહીશ્રી,
+જય યોગેશ્વર જય માતાજી.
+દિપોત્સવી પર્વ અને આવનાર નૂતન વર્ષના હાર્દિક અભિનંદન- શુભકામનાસહ
+ડૉ હરેન્દ્રસિંહ રણા, ડૉ હેમાગ્નીબેન, ડૉ ખુશ્બુ, ડૉ ઋત્વિક
+      </pre>
+    </div>
+
+    <div class="diya-container" id="diyas"></div>
+    <div id="fireworks"></div>
+  </div>
+
+  <script>
+    // Diyas
+    const diyaContainer = document.getElementById('diyas');
+    const numDiyas = Math.min(Math.floor(window.innerWidth / 120), 7);
+    for (let i = 0; i < numDiyas; i++) {
+      const diya = document.createElement('div');
+      diya.className = 'diya';
+      const flame = document.createElement('div');
+      flame.className = 'flame';
+      diya.appendChild(flame);
+      diyaContainer.appendChild(diya);
+    }
+
+    // Sparkles
+    const sparklesContainer = document.getElementById('sparkles');
+    for (let i = 0; i < 150; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 2 + 's';
+      s.style.opacity = 0.9;
+      sparklesContainer.appendChild(s);
+    }
+
+    const colors = ['#ff5252','#ffeb3b','#4caf50','#448aff','#e040fb','#00e5ff','#f48fb1','#fff176','#81c784','#64b5f6','#ba68c8','#4dd0e1'];
+
+    function createExplosion(x, y, color) {
+      const explosion = document.createElement('div');
+      explosion.className = 'explosion';
+      explosion.style.left = x + 'px';
+      explosion.style.bottom = y + 'px';
+      for (let i = 0; i < 24; i++) {
+        const particle = document.createElement('span');
+        particle.style.setProperty('--rotation', `${i * (360/24)}deg`);
+        particle.style.setProperty('--color', color);
+        explosion.appendChild(particle);
+      }
+      document.querySelector('.diwali-card').appendChild(explosion);
+      setTimeout(() => explosion.remove(), 1200);
+    }
+
+    function launchRocket() {
+      const card = document.querySelector('.diwali-card');
+      const rect = card.getBoundingClientRect();
+      const rocket = document.createElement('div');
+      rocket.className = 'rocket';
+
+      const startX = 20 + Math.random() * (rect.width - 40);
+      const endX = startX + (Math.random() * 200 - 100);
+      const maxHeight = rect.height * (0.45 + Math.random() * 0.35);
+      rocket.style.left = startX + 'px';
+      rocket.style.bottom = '0px';
+
+      card.appendChild(rocket);
+
+      const startTime = performance.now();
+      const duration = 1200 + Math.random() * 800;
+
+      function frame(now) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const ease = -t * (t - 2);
+        const currentX = startX + (endX - startX) * t;
+        const currentY = maxHeight * ease;
+        rocket.style.left = currentX + 'px';
+        rocket.style.bottom = currentY + 'px';
+
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          createExplosion(currentX, currentY, color);
+          rocket.remove();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // Fireworks loop
+    const launchInterval = setInterval(() => {
+      launchRocket();
+      if (Math.random() > 0.7) launchRocket();
+    }, 700);
+
+    // show runtime errors in console clearly
+    window.addEventListener('error', (e) => {
+      console.error('Page error:', e.message, 'at', `${e.filename}:${e.lineno}`);
+    });
+  </script>
+</body>
+</html>                border-radius: 30px;
                 backdrop-filter: blur(5px);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 position: absolute;
